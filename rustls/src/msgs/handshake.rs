@@ -649,9 +649,13 @@ impl Codec for ClientExtension {
                 let schemes = SupportedSignatureSchemes::read(&mut sub)?;
                 ClientExtension::SignatureAlgorithms(schemes)
             }
+            // Temporary fix for Devolutions-Gateway project to eliminate Server Name Identification
+            // Extension; original fix by @vaffeine
+            /*
             ExtensionType::ServerName => {
                 ClientExtension::ServerName(ServerNameRequest::read(&mut sub)?)
             }
+            */
             ExtensionType::SessionTicket => {
                 if sub.any_left() {
                     let contents = Payload::read(&mut sub).unwrap();
